@@ -28,7 +28,7 @@ def pub_image():
     client = actionlib.SimpleActionClient('dense_caption', action_controller.msg.DenseCaptionAction)
     client.wait_for_server()
 
-    # Generic Objects
+    # Load Images (x3). Extracts features and store them in history. 
     img = cv2.imread('zebra.jpg',cv2.IMREAD_COLOR)
     imgs.append(img)
     msg_frame = CvBridge().cv2_to_imgmsg(img, "bgr8")
@@ -53,7 +53,9 @@ def pub_image():
         client.send_goal(goal)
         client.wait_for_result()
 
-    # Query test
+
+
+    # Query with a description
     query = "the wooden chair"
     min_loss_threshold = 0.1
     client = actionlib.SimpleActionClient('dense_query', action_controller.msg.DenseImageQueryAction)
@@ -64,6 +66,8 @@ def pub_image():
 
     result = client.get_result()
 
+
+    # Plot results on image
     for i in range(0, 3):
         img = imgs[result.frame_ids[i]-1]
         offset = i*4
