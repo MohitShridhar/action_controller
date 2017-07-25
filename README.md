@@ -6,13 +6,23 @@ Custom messages for dense refexp
 Clone and Make:
 ```bash
 $ cd <your_catkin_ws>/src
-$ https://github.com/MohitShridhar/action_controller.git
+$ git clone https://github.com/MohitShridhar/action_controller.git
 
 $ cd <your_catkin_ws>
 $ catkin_make
 ```
 
 # Usage
+
+Make Peacock server your rosmaster in your `~/.bashrc`:
+```
+export ROS_IP=<your_ip_address>
+export ROS_MASTER_URI=http://172.26.186.217:11311
+export ROS_HOSTNAME=<your_ip_address>
+
+```
+export your bashrc.
+
 
 Check if query server is available:
 ```bash
@@ -36,8 +46,10 @@ You should see these topic:
 Run Example:
 ```
 cd <your_catkin_ws>/src/action_controller/test
-python dense_query_example.py
+python dense_refexp_example.py
 ```
+
+search for 'the rightmost red cup'
 
 See `dense_query_example.py` for usage
 

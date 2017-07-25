@@ -26,7 +26,9 @@ def pub_image():
     rospy.init_node('ImagePublisher', anonymous=True)
 
     client = actionlib.SimpleActionClient('dense_caption', action_controller.msg.DenseCaptionAction)
+    print "Waiting for server..."
     client.wait_for_server()
+    print "Server found!"
 
     # Load Images (x3). Extracts features and store them in history. 
     img = cv2.imread('zebra.jpg',cv2.IMREAD_COLOR)
@@ -56,7 +58,7 @@ def pub_image():
 
 
     # Query with a description
-    query = "the wooden chair"
+    query = "the zebras head"
     min_loss_threshold = 0.1
     client = actionlib.SimpleActionClient('dense_query', action_controller.msg.DenseImageQueryAction)
     client.wait_for_server()    
