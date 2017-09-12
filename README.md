@@ -30,17 +30,26 @@ $ rostopic list
 ```
 You should see these topic:
 ```
-/dense_caption/cancel
-/dense_caption/feedback
-/dense_caption/goal
-/dense_caption/result
-/dense_caption/status
-...
-/dense_query/cancel
-/dense_query/feedback
-/dense_query/goal
-/dense_query/result
-/dense_query/status
+/dense_localize/cancel
+/dense_localize/feedback
+/dense_localize/goal
+/dense_localize/result
+/dense_localize/status
+/dense_refexp_load/cancel
+/dense_refexp_load/feedback
+/dense_refexp_load/goal
+/dense_refexp_load/result
+/dense_refexp_load/status
+/dense_refexp_load_query/cancel
+/dense_refexp_load_query/feedback
+/dense_refexp_load_query/goal
+/dense_refexp_load_query/result
+/dense_refexp_load_query/status
+/dense_refexp_query/cancel
+/dense_refexp_query/feedback
+/dense_refexp_query/goal
+/dense_refexp_query/result
+/dense_refexp_query/status
 ```
 
 Run Example:
