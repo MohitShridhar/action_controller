@@ -42,8 +42,8 @@ def pub_image():
 
     incorrect_idxs = []
     
-    cv2.namedWindow('result', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('result', img.shape[1], img.shape[0])
+    # cv2.namedWindow('result', cv2.WINDOW_NORMAL)
+    # cv2.resizeWindow('result', img.shape[1], img.shape[0])
 
     while True:
         # query = "the water bottle next to the green glass"
