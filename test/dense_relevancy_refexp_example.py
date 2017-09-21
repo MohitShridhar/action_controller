@@ -50,7 +50,7 @@ def pub_image():
         query = raw_input('Search Query: ').lower()
 
         goal = action_controller.msg.RelevancyClusteringGoal(query, incorrect_idxs)
-        client.send_goal()
+        client.send_goal(goal)
         client.wait_for_result()
         selection_orig_idx = client.get_result().selection_orig_idx
 
