@@ -70,7 +70,7 @@ def pub_image():
         goal = action_controller.msg.BoxesRefexpQueryGoal(query, selected_boxes.ravel(), selection_orig_idx, incorrect_idxs)
         client_refexp.send_goal(goal)
         client_refexp.wait_for_result()
-        query_result = client.get_result()
+        query_result = client_refexp.get_result()
 
         top_idx = query_result.top_box_idx
         context_boxes_idxs = list(query_result.context_boxes_idxs)
