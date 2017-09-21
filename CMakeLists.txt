@@ -54,6 +54,7 @@ add_action_files(
   DenseRefexpLoad.action
   DenseRefexpQuery.action
   DenseRefexpLoadQuery.action
+  RelevancyClustering.action
 )
 
 generate_messages(
