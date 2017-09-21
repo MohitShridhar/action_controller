@@ -41,8 +41,13 @@ def pub_image():
 
     # Query test
     print "Waiting for relevancy_clustering server..."
-    client = actionlib.SimpleActionClient('relevancy_clustering', action_controller.msg.RelevancyClusteringAction)
-    client.wait_for_server()    
+    client_relevancy = actionlib.SimpleActionClient('relevancy_clustering', action_controller.msg.RelevancyClusteringAction)
+    client_relevancy.wait_for_server()    
+    print "Found relevancy_clustering server!"
+
+    print "Waiting for relevancy_clustering server..."
+    client_refexp = actionlib.SimpleActionClient('boxes_refexp_query', action_controller.msg.BoxesRefexpQueryAction)
+    client_refexp.wait_for_server()    
     print "Found relevancy_clustering server!"
 
     incorrect_idxs = []
@@ -55,37 +60,39 @@ def pub_image():
         query = raw_input('Search Query: ').lower()
 
         goal = action_controller.msg.RelevancyClusteringGoal(query, incorrect_idxs)
-        client.send_goal(goal)
-        client.wait_for_result()
-        selection_orig_idx = client.get_result().selection_orig_idx
+        client_relevancy.send_goal(goal)
+        client_relevancy.wait_for_result()
+        selection_orig_idx = client_relevancy.get_result().selection_orig_idx
 
-        print selection_orig_idx
+        selected_boxes = np.take(boxes, selection_orig_idx, axis=0)
+        # TODO: do some perspective correction
         
-        # goal = action_controller.msg.DenseRefexpQueryGoal(query, incorrect_idxs)
-        # client.send_goal(goal)
-        # client.wait_for_result()
-        # query_result = client.get_result()
+        goal = action_controller.msg.BoxesRefexpQueryGoal(query, selected_boxes.ravel(), selection_orig_idx, incorrect_idxs)
+        client_refexp.send_goal(goal)
+        client_refexp.wait_for_result()
+        query_result = client.get_result()
 
-        # top_idx = query_result.top_box_idx
-        # context_boxes_idxs = list(query_result.context_boxes_idxs)
-        # context_boxes_idxs.append(top_idx)
+        top_idx = query_result.top_box_idx
+        context_boxes_idxs = list(query_result.context_boxes_idxs)
+        context_boxes_idxs.append(top_idx)
 
-        # # visualize
-        # draw_img = img.copy()
-        # for (count, idx) in enumerate(context_boxes_idxs):
+        # visualize
+        draw_img = img.copy()
+        for (count, idx) in enumerate(context_boxes_idxs):
 
-        #     x1 = int(boxes[idx][0])
-        #     y1 = int(boxes[idx][1])
-        #     x2 = int(boxes[idx][0]+boxes[idx][2])
-        #     y2 = int(boxes[idx][1]+boxes[idx][3])
+            x1 = int(boxes[idx][0])
+            y1 = int(boxes[idx][1])
+            x2 = int(boxes[idx][0]+boxes[idx][2])
+            y2 = int(boxes[idx][1]+boxes[idx][3])
 
-        #     if count == len(context_boxes_idxs)-1:
-        #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0,0,255), 12)
-        #     else:
-        #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0,255,0), 2)
+            if count == len(context_boxes_idxs)-1:
+                cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0,0,255), 12)
+            else:
+                cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0,255,0), 2)
 
         # cv2.imshow('result', draw_img)
         # k = cv2.waitKey(0)
+        cv2.imwrite('./result_relevancy.png', draw_img)
 
     return True
 
