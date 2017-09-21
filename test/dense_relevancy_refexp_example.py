@@ -26,7 +26,7 @@ def pub_image():
     client.wait_for_server()
 
     # Single Tabel Test
-    path = './table_mult_dups.png'
+    path = './3cups.jpg'
 
     img = cv2.imread(path,cv2.IMREAD_COLOR)
     img = img[CROP_Y1:CROP_Y2, CROP_X1:CROP_X2]
