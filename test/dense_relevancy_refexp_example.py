@@ -13,6 +13,10 @@ import copy
 
 import numpy as np
 
+CROP_X1 = 245
+CROP_Y1 = 585
+CROP_X2 = 245+1180
+CROP_Y2 = 585+424
 
 def pub_image():
     rospy.init_node('ImagePublisher', anonymous=True)
@@ -25,6 +29,7 @@ def pub_image():
     path = './table_mult_dups.png'
 
     img = cv2.imread(path,cv2.IMREAD_COLOR)
+    img = img[CROP_Y1:CROP_Y2, CROP_X1:CROP_X2]
     # img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     msg_frame = CvBridge().cv2_to_imgmsg(img, "rgb8")
     goal = action_controller.msg.DenseRefexpLoadGoal(msg_frame)
