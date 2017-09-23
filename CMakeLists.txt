@@ -21,7 +21,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   sensor_msgs
   # tum_ardrone
-  # dynamic_reconfigure
+  rospy
+  dynamic_reconfigure
 )
 
 include_directories(${catkin_INCLUDE_DIRS})
@@ -65,8 +66,12 @@ generate_messages(
   actionlib_msgs
   action_controller
   # tum_ardrone
-  # dynamic_reconfigure
+  dynamic_reconfigure
   sensor_msgs
+)
+
+generate_dynamic_reconfigure_options(
+  cfg/RefexpMicoDemo.cfg
 )
 
 catkin_package(
@@ -78,7 +83,7 @@ catkin_package(
   geometry_msgs
   sensor_msgs
   # tum_ardrone
-  # dynamic_reconfigure
+  dynamic_reconfigure
   actionlib_msgs
 )
 
