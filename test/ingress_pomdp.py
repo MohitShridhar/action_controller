@@ -32,7 +32,7 @@ def pub_image():
     print "Densecap - Vocabulary Size: %s" % (densecap_vocab.get_vocab_size())
     rospy.init_node('ImagePublisher', anonymous=True)
 
-    client = actionlib.SimpleActionClient('dense_localize_probs', action_controller.msg.LocalizeProbsAction)
+    client = actionlib.SimpleActionClient('dense_localize', action_controller.msg.LocalizeAction)
     print "Waiting for dense_localize ..."
     client.wait_for_server()
 
@@ -52,9 +52,9 @@ def pub_image():
 
     boxes = np.reshape(load_result.boxes, (-1, 4))
     # print np.array(load_result.word_probs).shape, np.array(load_result.word_probs)[0]
-    word_probs = np.reshape(load_result.word_probs, (-1, T, V))
+    # word_probs = np.reshape(load_result.word_probs, (-1, T, V))
     # print word_probs
-    captions = densecap_vocab.probs_to_captions(word_probs)
+    # captions = densecap_vocab.probs_to_captions(word_probs)
     lua_losses = load_result.scores
     # print captions
     # print lua_losses
@@ -69,16 +69,16 @@ def pub_image():
         # query = "the water bottle next to the green glass"
         query = raw_input('Search Query: ').lower()
 
-        query_t0 = time.time()
-        losses = densecap_vocab.simple_avg_cross_entropy_loss(word_probs, query)
-        sorted_idx = np.argsort(losses)
-        query_t1 = time.time()
+        # losses = densecap_vocab.simple_avg_cross_entropy_loss(word_probs, query)
+        # sorted_idx = np.argsort(losses)
         
+        query_t0 = time.time()
         beam_length = len(load_result.captions)
         goal = action_controller.msg.LocalizeQueryGoal(query, beam_length, 6.0)
         query_client.send_goal(goal)
         query_client.wait_for_result()
         query_result = query_client.get_result()
+        query_t1 = time.time()
         print "Total Time for Query: " + str(query_t1-query_t0)
         
         # orig_idx = sorted_idx
