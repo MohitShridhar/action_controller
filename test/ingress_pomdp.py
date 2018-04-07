@@ -62,8 +62,8 @@ def pub_image():
     query_client = actionlib.SimpleActionClient('localize_query', action_controller.msg.LocalizeQueryAction)
     query_client.wait_for_server()
     
-    cv2.namedWindow('result', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('result', img.shape[1], img.shape[0])
+    # cv2.namedWindow('result', cv2.WINDOW_NORMAL)
+    # cv2.resizeWindow('result', img.shape[1], img.shape[0])
 
     while True:
         # query = "the water bottle next to the green glass"
@@ -101,8 +101,9 @@ def pub_image():
             elif count < 5:
                 cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0,255,0), 2)
 
-        cv2.imshow('result', draw_img)
-        k = cv2.waitKey(0)
+        # cv2.imshow('result', draw_img)
+        # k = cv2.waitKey(0)
+        
         # cv2.imwrite('./result_relevancy.png', draw_img)
 
     return True
