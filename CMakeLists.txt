@@ -42,6 +42,7 @@ add_message_files(
 add_service_files(
   FILES
   # DenseCaption.srv
+  MeteorScore.srv
 )
 
 add_action_files(
@@ -50,6 +51,7 @@ add_action_files(
   DenseCaption.action
   DenseImageQuery.action
   Localize.action
+  LocalizeProbs.action
   LocalizeQuery.action
   ExtractFeatures.action
   DenseRefexpLoad.action
